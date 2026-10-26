@@ -1,13 +1,12 @@
-
 pipeline {
     agent any
 
     stages {
-        stage('Checkout Main Backend') {
+        stage('Checkout File Upload API') {
             steps {
                 dir('MainBackend') {
                     git branch: 'main',
-                        url: 'https://github.com/Raviprajapati808562/backend_fileupload.git'
+                        url: 'https://github.com/Raviprajapati808562/Car_Fileupload_api.git'
                 }
             }
         }
@@ -21,7 +20,7 @@ pipeline {
             }
         }
 
-        stage('Build Main Backend') {
+        stage('Build File Upload API') {
             steps {
                 dir('MainBackend') {
                     bat 'mvn clean package -DskipTests'
@@ -47,12 +46,6 @@ pipeline {
 
                     copy /Y CarApi\\target\\*.jar docker-context\\car.jar
                     if errorlevel 1 exit /b 1
-
-                    copy /Y MainBackend\\Dockerfile docker-context\\Dockerfile
-                    if errorlevel 1 exit /b 1
-
-                    copy /Y MainBackend\\start.sh docker-context\\start.sh
-                    if errorlevel 1 exit /b 1
                 '''
             }
         }
@@ -63,7 +56,7 @@ pipeline {
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Run Container') {
             steps {
                 bat '''
                     docker rm -f banking-app 2>NUL
@@ -72,18 +65,11 @@ pipeline {
                 '''
             }
         }
-
-        stage('Verify Deployment') {
-            steps {
-                bat 'docker ps --filter name=banking-app'
-                bat 'docker logs banking-app'
-            }
-        }
     }
 
     post {
         success {
-            echo 'Both APIs built and the Docker container was started.'
+            echo 'Both API branches built and the container was started.'
         }
         failure {
             echo 'Pipeline failed. Check the Jenkins console output.'
