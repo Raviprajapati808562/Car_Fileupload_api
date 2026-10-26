@@ -42,7 +42,7 @@ pipeline {
                 bat '''
                     if not exist docker-context mkdir docker-context
 
-                    copy /Y MainBackend\\target\\*.jar docker-context\\main.jar
+                    copy /Y MainBackend\\target\\BACKEND-API.jar docker-context\\main.jar
                     if errorlevel 1 exit /b 1
 
                     copy /Y CarApi\\target\\*.jar docker-context\\car.jar
@@ -73,7 +73,7 @@ pipeline {
             }
         }
 
-        stage('Verify Container') {
+        stage('Verify Deployment') {
             steps {
                 bat 'docker ps --filter name=banking-app'
                 bat 'docker logs banking-app'
