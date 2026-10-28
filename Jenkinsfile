@@ -88,15 +88,22 @@ wait "$MAIN_PID"
             }
         }
 
-        stage('Run Docker Container') {
-            steps {
-                bat '''
-                    docker rm -f banking-app 2>NUL
-                    docker run -d --name banking-app -p 9091:9091 -p 8081:8081 banking-app:latest
-                    if errorlevel 1 exit /b 1
-                '''
-            }
-        }
+
+stage('Run Docker Container') {
+    steps {
+        bat '''
+            docker rm -f banking-app 2>NUL
+
+            docker run -d --name banking-app ^
+                -p 9092:9091 ^
+                -p 8082:8081 ^
+                banking-app:latest
+
+            if errorlevel 1 exit /b 1
+        '''
+    }
+}
+
 
         stage('Verify Deployment') {
             steps {
