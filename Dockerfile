@@ -1,3 +1,4 @@
+
 FROM eclipse-temurin:17-jre
 
 WORKDIR /app
@@ -10,4 +11,4 @@ RUN chmod +x /app/start.sh
 
 EXPOSE 9091 8081
 
-CMD ["/app/start.sh"]
+ENTRYPOINT ["/bin/sh", "/app/start.sh"]
