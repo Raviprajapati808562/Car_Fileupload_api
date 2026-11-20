@@ -15,13 +15,20 @@ public class AIService {
 
 	public String askAI(String question) {
 
-		@Nullable
-		String content = chatClient.prompt().system("""
-				You are a helpful assistant.
-				Give concise and accurate answers.
-				Use simple language.
-				Keep answers within 150 words.
-				""").user(question).call().content();
-		return content;
+		System.out.println("Question received: " + question);
+
+		String predefinedAnswer =
+				PredefinedAnswers.getAnswer(question);
+
+		if (predefinedAnswer != null) {
+			System.out.println("Returning predefined answer");
+			return predefinedAnswer;
+		}
+
+		String response = chatClient.prompt()
+				.user(question)
+				.call()
+				.content();
+		return response;
 	}
 }
