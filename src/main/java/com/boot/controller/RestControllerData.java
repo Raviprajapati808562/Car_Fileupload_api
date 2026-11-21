@@ -1,4 +1,4 @@
-package com.boot;
+package com.boot.controller;
 
 import com.boot.model.Employee;
 import com.boot.service.EmployeeService;

@@ -26,10 +26,8 @@ public class SecurityFilterChainConfigBoot {
         http
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests
-                                .requestMatchers("/**").permitAll()
-                                .anyRequest().authenticated()
+                .authorizeHttpRequests(auth ->
+                        auth.anyRequest().permitAll()
                 )
                 .formLogin(withDefaults());
 
@@ -42,7 +40,9 @@ public class SecurityFilterChainConfigBoot {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(
-                Arrays.asList("http://localhost:4200")
+                Arrays.asList(
+                        "http://localhost:4200"
+                )
         );
 
         configuration.setAllowedMethods(

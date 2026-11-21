@@ -6,15 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ai/api")
-@CrossOrigin(
-        origins = "http://localhost:4200",
-        methods = {
-                RequestMethod.GET,
-                RequestMethod.POST,
-                RequestMethod.OPTIONS
-        },
-        allowedHeaders = "*"
-)
+@CrossOrigin
 public class AiController {
     private final AIService aiService;
 
